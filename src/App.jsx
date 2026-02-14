@@ -10,7 +10,7 @@ import AboutUs from "./pages/AboutUs";
 function App() {
   return (
     <ThemeProvider>
-      <Router>
+      <Router basename="/Naanlecious">
         <ScrollToTop />
         <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
           <Navbar />
