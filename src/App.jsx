@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -10,7 +10,7 @@ import AboutUs from "./pages/AboutUs";
 function App() {
   return (
     <ThemeProvider>
-      <Router basename="/Naanlecious">
+      <Router>
         <ScrollToTop />
         <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
           <Navbar />
