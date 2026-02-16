@@ -7,84 +7,45 @@ import {
   FishIcon as Fries,
   Coffee,
   IceCream,
+  GlassWater,
 } from "lucide-react";
 import ContactModal from "./ContactModal";
+import { menuCategories } from "../data/menuData";
 
 const Menu = () => {
   const [showContactModal, setShowContactModal] = useState(false);
-  
-  const menuItems = [
-    {
-      id: 1,
-      name: "Pizza Naan",
-      description: "Traditional naan bread topped with premium pizza toppings",
-      image:
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80",
-      icon: Pizza,
-      price: "$8.99",
-      color: "from-primary-500 to-orange-600",
-    },
-    {
-      id: 2,
-      name: "Burgers",
-      description: "Juicy beef burgers with fresh vegetables and special sauce",
-      image:
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80",
-      icon: Beef,
-      price: "$7.99",
-      color: "from-secondary-500 to-red-600",
-    },
-    {
-      id: 3,
-      name: "Wraps",
-      description: "Delicious wraps packed with flavor and fresh ingredients",
-      image:
-        "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600&q=80",
-      icon: Sandwich,
-      price: "$6.99",
-      color: "from-accent-500 to-yellow-600",
-    },
-    {
-      id: 4,
-      name: "Fries",
-      description: "Crispy golden fries seasoned to perfection",
-      image:
-        "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&q=80",
-      icon: Fries,
-      price: "$3.99",
-      color: "from-amber-500 to-orange-600",
-    },
-    {
-      id: 5,
-      name: "Traditional Tea & Coffee",
-      description: "Authentic Pakistani chai, green tea, and specialty coffee",
-      image:
-        "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&q=80",
-      icon: Coffee,
-      price: "$2.49",
-      color: "from-amber-500 to-orange-600",
-    },
-    {
-      id: 6,
-      name: "Ice Shakes",
-      description: "Creamy milkshakes in various delicious flavors",
-      image:
-        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&q=80",
-      icon: IceCream,
-      price: "$4.99",
-      color: "from-pink-500 to-purple-600",
-    },
-    {
-      id: 7,
-      name: "Ice Creams",
-      description: "Delicious ice cream with traditional & classic flavors",
-      image:
-        "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80",
-      icon: IceCream,
-      price: "$3.99",
-      color: "from-cyan-500 to-blue-600",
-    },
-  ];
+
+  // Map categories to display format with icons
+  const iconMap = {
+    "Pizza Naans": Pizza,
+    Burgers: Beef,
+    Wraps: Sandwich,
+    Fries: Fries,
+    "Traditional Tea & Coffee": Coffee,
+    "Ice Shakes": IceCream,
+    "Ice Creams": IceCream,
+    Drinks: GlassWater,
+  };
+
+  const colorMap = {
+    "Pizza Naans": "from-primary-500 to-orange-600",
+    Burgers: "from-secondary-500 to-red-600",
+    Wraps: "from-accent-500 to-yellow-600",
+    Fries: "from-amber-500 to-orange-600",
+    "Traditional Tea & Coffee": "from-amber-500 to-orange-600",
+    "Ice Shakes": "from-pink-500 to-purple-600",
+    "Ice Creams": "from-cyan-500 to-blue-600",
+    Drinks: "from-blue-500 to-cyan-600",
+  };
+
+  const menuItems = menuCategories.map((category) => ({
+    ...category,
+    icon: iconMap[category.name] || Pizza,
+    color: colorMap[category.name] || "from-primary-500 to-orange-600",
+    price: category.items[0]?.sizes
+      ? category.items[0].sizes[0]?.price || "$0.00"
+      : category.items[0]?.price || "$0.00",
+  }));
 
   return (
     <section id="menu" className="py-16 md:py-24 bg-white dark:bg-gray-900">
@@ -106,9 +67,14 @@ const Menu = () => {
         {/* Menu Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {menuItems.map((item) => (
-            <div
+            <Link
               key={item.id}
-              className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+              to={`/menu/${item.slug}`}
+              onClick={() => {
+                // Save current scroll position before navigating
+                sessionStorage.setItem("menuScrollPosition", window.scrollY.toString());
+              }}
+              className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
             >
               {/* Image Container */}
               <div className="relative h-56 overflow-hidden">
@@ -129,7 +95,7 @@ const Menu = () => {
                 {/* Price Badge */}
                 <div className="absolute bottom-4 left-4 bg-white dark:bg-gray-900 px-4 py-2 rounded-full shadow-lg">
                   <span className="font-bold text-lg text-gray-900 dark:text-white">
-                    {item.price}
+                    From {item.price}
                   </span>
                 </div>
               </div>
@@ -141,51 +107,31 @@ const Menu = () => {
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">{item.description}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
-        {/* Call to Action Buttons */}
+        {/* Call to Action */}
         <div className="text-center mt-12">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/menu">
-              <button className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
-                <span>View Complete Menu</span>
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </Link>
-            <button
-              onClick={() => setShowContactModal(true)}
-              className="inline-flex items-center space-x-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+          <button
+            onClick={() => setShowContactModal(true)}
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              <span>Order Now</span>
-            </button>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            <span>Order Now</span>
+          </button>
           <p className="text-gray-600 dark:text-gray-400 mt-4 text-sm">
             🍕 Fresh ingredients • ⚡ Fast delivery • ⭐ Highly rated
           </p>

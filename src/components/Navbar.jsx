@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import ContactModal from "./ContactModal";
 import ThemeToggle from "./ThemeToggle";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [showContactModal, setShowContactModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { getTotalItems, setIsCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -97,6 +99,18 @@ const Navbar = () => {
               )}
               <ThemeToggle />
               <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Shopping cart"
+              >
+                <ShoppingCart className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                {getTotalItems() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {getTotalItems()}
+                  </span>
+                )}
+              </button>
+              <button
                 onClick={() => setShowContactModal(true)}
                 className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
               >
@@ -107,6 +121,18 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center space-x-3">
               <ThemeToggle />
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Shopping cart"
+              >
+                <ShoppingCart className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                {getTotalItems() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {getTotalItems()}
+                  </span>
+                )}
+              </button>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-gray-700 dark:text-gray-300 hover:text-primary-500 transition-colors"

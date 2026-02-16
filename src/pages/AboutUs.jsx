@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
   Heart,
@@ -19,6 +19,18 @@ import ContactModal from "../components/ContactModal";
 
 const AboutUs = () => {
   const [showContactModal, setShowContactModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleMenuClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+    setTimeout(() => {
+      const element = document.getElementById("menu");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
+  };
 
   const values = [
     {
@@ -115,12 +127,12 @@ const AboutUs = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Hero Section */}
         <section className="relative pt-24 pb-16 overflow-hidden">
           {/* Background Decorations */}
-          <div className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-primary-500/20 to-secondary-500/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-accent-500/20 to-primary-500/20 rounded-full blur-3xl" />
+          <div className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-primary-500/20 to-secondary-500/20 dark:from-primary-500/10 dark:to-secondary-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-accent-500/20 to-primary-500/20 dark:from-accent-500/10 dark:to-primary-500/10 rounded-full blur-3xl" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Back Button */}
@@ -131,7 +143,7 @@ const AboutUs = () => {
             >
               <Link
                 to="/"
-                className="inline-flex items-center space-x-2 text-gray-700 hover:text-primary-500 transition-colors"
+                className="inline-flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
                 <span className="font-medium">Back to Home</span>
@@ -154,7 +166,7 @@ const AboutUs = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6"
               >
                 Welcome to <span className="text-gradient">Naanlecious</span>
               </motion.h1>
@@ -163,7 +175,7 @@ const AboutUs = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
               >
                 Where tradition meets innovation, and every bite tells a story
                 of passion, flavor, and culinary excellence.
@@ -181,15 +193,15 @@ const AboutUs = () => {
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="bg-white rounded-2xl shadow-lg p-6 text-center"
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 text-center"
                 >
                   <div className="bg-gradient-to-br from-primary-500 to-secondary-500 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                  <div className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                     {stat.number}
                   </div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
@@ -197,7 +209,7 @@ const AboutUs = () => {
         </section>
 
         {/* Our Story Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <motion.div
@@ -206,24 +218,24 @@ const AboutUs = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
                   Our <span className="text-gradient">Story</span>
                 </h2>
-                <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
                   Naanlecious was born from a simple yet revolutionary idea:
                   what if we could transform the humble naan bread into
                   something extraordinary? Our founders, passionate food
                   enthusiasts with deep roots in traditional cooking, saw an
                   opportunity to create a unique fusion experience.
                 </p>
-                <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
                   Starting in a modest kitchen in 2019, we experimented with
                   countless recipes, perfecting our signature Pizza Naans. The
                   response was overwhelming! Customers loved the crispy yet soft
                   texture, the perfect blend of spices, and the innovative
                   toppings.
                 </p>
-                <p className="text-lg text-gray-600 leading-relaxed">
+                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                   Today, we've grown into a beloved local destination, serving
                   not just Pizza Naans, but a full menu of delicious fast-food
                   items with our unique twist. Every dish reflects our
@@ -269,7 +281,7 @@ const AboutUs = () => {
         </section>
 
         {/* Mission & Vision */}
-        <section className="py-16 bg-gradient-to-br from-primary-50 to-secondary-50">
+        <section className="py-16 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-gray-800 dark:to-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <motion.div
@@ -277,17 +289,17 @@ const AboutUs = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-3xl shadow-xl p-8 relative overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary-500/10 to-secondary-500/10 rounded-full -mr-20 -mt-20" />
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary-500/10 to-secondary-500/10 dark:from-primary-500/20 dark:to-secondary-500/20 rounded-full -mr-20 -mt-20" />
                 <div className="relative z-10">
                   <div className="bg-gradient-to-br from-primary-500 to-secondary-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                     <Target className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
                     Our Mission
                   </h3>
-                  <p className="text-lg text-gray-600 leading-relaxed">
+                  <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                     To revolutionize fast food by combining traditional flavors
                     with modern innovation, creating memorable dining
                     experiences that bring joy to every customer, one delicious
@@ -302,17 +314,17 @@ const AboutUs = () => {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-3xl shadow-xl p-8 relative overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full -mr-20 -mt-20" />
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20 rounded-full -mr-20 -mt-20" />
                 <div className="relative z-10">
                   <div className="bg-gradient-to-br from-blue-500 to-purple-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
                     Our Vision
                   </h3>
-                  <p className="text-lg text-gray-600 leading-relaxed">
+                  <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                     To become the most loved fusion fast-food destination,
                     inspiring culinary creativity while staying true to our
                     roots, and expanding our unique flavors to communities
@@ -325,7 +337,7 @@ const AboutUs = () => {
         </section>
 
         {/* Core Values */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -333,10 +345,10 @@ const AboutUs = () => {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Our Core <span className="text-gradient">Values</span>
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 These principles guide everything we do, from selecting
                 ingredients to serving our customers.
               </p>
@@ -351,17 +363,17 @@ const AboutUs = () => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.05, y: -10 }}
-                  className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg p-6 text-center relative overflow-hidden"
+                  className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl shadow-lg p-6 text-center relative overflow-hidden"
                 >
                   <div
                     className={`bg-gradient-to-br ${value.color} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4`}
                   >
                     <value.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                     {value.title}
                   </h3>
-                  <p className="text-gray-600">{value.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300">{value.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -369,7 +381,7 @@ const AboutUs = () => {
         </section>
 
         {/* Journey Timeline */}
-        <section className="py-16 bg-gradient-to-br from-orange-50 via-white to-red-50">
+        <section className="py-16 bg-gradient-to-br from-orange-50 via-white to-red-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -377,10 +389,10 @@ const AboutUs = () => {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Our <span className="text-gradient">Journey</span>
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 From a small kitchen to your favorite food destination.
               </p>
             </motion.div>
@@ -413,15 +425,15 @@ const AboutUs = () => {
                     </div>
                     <motion.div
                       whileHover={{ scale: 1.02 }}
-                      className="flex-1 bg-white rounded-2xl shadow-lg p-6"
+                      className="flex-1 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6"
                     >
-                      <div className="text-primary-500 font-bold text-2xl mb-2">
+                      <div className="text-primary-500 dark:text-primary-400 font-bold text-2xl mb-2">
                         {item.year}
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600">{item.description}</p>
+                      <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
                     </motion.div>
                   </motion.div>
                 ))}
@@ -431,7 +443,7 @@ const AboutUs = () => {
         </section>
 
         {/* Team Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -439,10 +451,10 @@ const AboutUs = () => {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Meet Our <span className="text-gradient">Team</span>
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 The passionate people behind your favorite flavors.
               </p>
             </motion.div>
@@ -456,7 +468,7 @@ const AboutUs = () => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -10 }}
-                  className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg overflow-hidden"
+                  className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl shadow-lg overflow-hidden"
                 >
                   <div className="relative overflow-hidden h-64">
                     <motion.img
@@ -469,13 +481,13 @@ const AboutUs = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
                       {member.name}
                     </h3>
-                    <p className="text-primary-500 font-semibold mb-2">
+                    <p className="text-primary-500 dark:text-primary-400 font-semibold mb-2">
                       {member.role}
                     </p>
-                    <p className="text-gray-600 text-sm">{member.specialty}</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">{member.specialty}</p>
                   </div>
                 </motion.div>
               ))}
@@ -499,15 +511,14 @@ const AboutUs = () => {
                 Order now and let us bring the flavors to you!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/menu">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-white text-primary-500 px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all"
-                  >
-                    View Our Menu
-                  </motion.button>
-                </Link>
+                <motion.button
+                  onClick={handleMenuClick}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all"
+                >
+                  View Our Menu
+                </motion.button>
                 <motion.button
                   onClick={() => setShowContactModal(true)}
                   whileHover={{ scale: 1.05 }}
